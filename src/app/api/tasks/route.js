@@ -1,5 +1,6 @@
 import { NextResponse} from "next/server";
 import prisma from "@/app/Libs/prisma";
+import { unstable_noStore as noStore } from 'next/cache';
 
 
 export async function GET() {
@@ -14,3 +15,5 @@ export async function POST(request) {
     }})
   return NextResponse.json(newTask);
 }
+
+

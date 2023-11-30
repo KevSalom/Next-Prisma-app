@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import revalidate from "../Libs/revalidate";
+
 
 const NewPage = ({ params }) => {
   const [title, setTitle] = useState("");
@@ -21,7 +23,7 @@ const NewPage = ({ params }) => {
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const dataTask = {
         title,
@@ -44,21 +46,19 @@ const NewPage = ({ params }) => {
             'Content-Type': 'app`lication/json'
           },
         })
-      router.refresh()
       }
-      
-
-      router.push("/");
+      revalidate()
+      // Redirigir a la ruta principal
+      router.push('/');
     } catch (error) {
       console.error(error.message);
     }
-
-
 
   };
   return (
     <div className="h-screen flex justify-center items-center ">
       <form
+
         onSubmit={handleSubmit}
         className="flex flex-col bg-slate-500 p-4 w-full sm:w-1/4 gap-4 rounded-md"
       >
@@ -94,4 +94,3 @@ const NewPage = ({ params }) => {
 };
 
 export default NewPage;
-export const dynamic = 'force-dynamic';
